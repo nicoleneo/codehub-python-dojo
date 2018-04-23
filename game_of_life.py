@@ -1,7 +1,7 @@
 import copy
 
-BOARD_WIDTH = 10
-BOARD_HEIGHT = 10
+BOARD_WIDTH = 20
+BOARD_HEIGHT = 20
 # y always goes first! Blame arrays.
 INITIAL_CELLS = [[5,4], [5,5], [5,6]]
 
@@ -48,10 +48,14 @@ class Board:
                 if cell == 0:
                     if num_live_neighbours == 3:
                         new_board[y][x] = 1
+                    else:
+                        new_board[y][x] = 0
                 elif cell == 1:
                     if num_live_neighbours < 2:
                         # kill
                         new_board[y][x] = 0
+                    elif num_live_neighbours >= 2 and num_live_neighbours <= 3:
+                        new_board[y][x] = 1
                     elif num_live_neighbours > 3:
                         # kill
                         new_board[y][x] = 0
@@ -75,7 +79,10 @@ def mousePressed():
     for y in range(0, len(BOARD.board)):
         for x in range(0, len(BOARD.board[1])):
             if BOARD.board[y][x] == 1:
-                rect(x*10, y*10, 10, 10)
+                fill(0)
+            else:
+                fill(255)
+            rect(x*10, y*10, 10, 10)
                 
     BOARD.next_frame()
     print('next')
